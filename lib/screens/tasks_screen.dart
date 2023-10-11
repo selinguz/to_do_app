@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 
-class TasksScreen extends StatelessWidget {
-  const TasksScreen({super.key});
+class TasksScreen extends StatefulWidget {
+  TasksScreen({super.key});
+
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  final List<String> tasks = [
+    'Buy Milk',
+    'Go to library',
+    'Take children from school',
+  ];
+
+  bool _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +65,21 @@ class TasksScreen extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0))),
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
+                ),
+              ),
+              child: ListView.separated(
+                itemCount: tasks.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return MyListItems(tasks[index]);
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider();
+                },
+              ),
             ),
           ),
         ],
@@ -68,6 +92,36 @@ class TasksScreen extends StatelessWidget {
           Icons.add,
           color: Colors.white,
         ),
+      ),
+    );
+  }
+
+  Widget MyListItems(String itemText) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 18.0, right: 18.0),
+      child: Row(
+        children: [
+          Checkbox(
+            activeColor: Colors.lightBlueAccent,
+            side: BorderSide(color: Colors.blueAccent),
+            value: _isChecked,
+            onChanged: (value) {
+              setState(() {
+                _isChecked == false ? _isChecked = true : _isChecked = false;
+              });
+            },
+          ),
+          Text(
+            itemText,
+            style: TextStyle(
+              color: Colors.black54,
+              fontSize: 18.0,
+              decoration: _isChecked == true
+                  ? TextDecoration.lineThrough
+                  : TextDecoration.none,
+            ),
+          ),
+        ],
       ),
     );
   }
