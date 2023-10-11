@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '/widgets/tasks_list.dart';
+import 'add_task_screen.dart';
 
 class TasksScreen extends StatefulWidget {
   TasksScreen({super.key});
@@ -77,7 +79,18 @@ class _TasksScreenState extends State<TasksScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              builder: (context) => SingleChildScrollView(
+                  child:Container(
+                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: AddTaskScreen(),
+                  )
+              )
+          );
+        },
         backgroundColor: Colors.lightBlueAccent,
         shape: CircleBorder(),
         child: Icon(
@@ -88,5 +101,3 @@ class _TasksScreenState extends State<TasksScreen> {
     );
   }
 }
-
-
