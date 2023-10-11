@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/widgets/tasks_list.dart';
 
 class TasksScreen extends StatefulWidget {
   TasksScreen({super.key});
@@ -13,8 +14,6 @@ class _TasksScreenState extends State<TasksScreen> {
     'Go to library',
     'Take children from school',
   ];
-
-  bool _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +63,7 @@ class _TasksScreenState extends State<TasksScreen> {
           ),
           Expanded(
             child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -71,15 +71,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: ListView.separated(
-                itemCount: tasks.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return MyListItems(tasks[index]);
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider();
-                },
-              ),
+              child: TasksList(),
             ),
           ),
         ],
@@ -95,34 +87,6 @@ class _TasksScreenState extends State<TasksScreen> {
       ),
     );
   }
-
-  Widget MyListItems(String itemText) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 18.0, right: 18.0),
-      child: Row(
-        children: [
-          Checkbox(
-            activeColor: Colors.lightBlueAccent,
-            side: BorderSide(color: Colors.blueAccent),
-            value: _isChecked,
-            onChanged: (value) {
-              setState(() {
-                _isChecked == false ? _isChecked = true : _isChecked = false;
-              });
-            },
-          ),
-          Text(
-            itemText,
-            style: TextStyle(
-              color: Colors.black54,
-              fontSize: 18.0,
-              decoration: _isChecked == true
-                  ? TextDecoration.lineThrough
-                  : TextDecoration.none,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
+
+
