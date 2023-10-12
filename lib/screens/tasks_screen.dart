@@ -11,11 +11,6 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  final List<String> tasks = [
-    'Buy Milk',
-    'Go to library',
-    'Take children from school',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +80,8 @@ class _TasksScreenState extends State<TasksScreen> {
               isScrollControlled: true,
               builder: (context) => SingleChildScrollView(
                   child:Container(
-                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                    //padding: EdgeInsets.only(bottom: MediaQuery.of(context)
+                      //.viewInsets.bottom),
                     child: AddTaskScreen(),
                   )
               )
