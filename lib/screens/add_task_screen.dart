@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+class AddTaskScreen extends StatelessWidget {
+  final Function addTaskCallback;
 
-  @override
-  State<AddTaskScreen> createState() => _AddTaskScreenState();
-}
+  AddTaskScreen({required this.addTaskCallback});
 
-class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
+    String? newTaskTitle;
     return Container(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 28.0),
+      margin: EdgeInsets.only(bottom: 22.0, top: 22.0),
+      padding: EdgeInsets.symmetric(vertical: 50.0),
+      height: MediaQuery.of(context).size.width,
+      child: Expanded(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
               'Add Task',
@@ -34,10 +34,17 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.lightBlueAccent,
-                      width: 5.0,
+                      width: 3.0,
                     ),
                   ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Colors.lightBlueAccent, width: 3.0),
+                  ),
                 ),
+                onChanged: (newText) {
+                  newTaskTitle = newText;
+                },
               ),
             ),
             SizedBox(
@@ -51,9 +58,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                   backgroundColor: Colors.lightBlueAccent,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  addTaskCallback(newTaskTitle);
+                },
                 child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(22.0),
                   child: Text(
                     'Add',
                     style: TextStyle(

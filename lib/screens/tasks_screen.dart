@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/task.dart';
 import '/widgets/tasks_list.dart';
 import 'add_task_screen.dart';
 
@@ -11,6 +12,7 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
+  final List<Task> tasks = [];
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  '12 Tasks',
+                  '${tasks.length} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -68,7 +70,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: TasksList(),
+              child: TasksList(tasks: tasks),
             ),
           ),
         ],
@@ -76,15 +78,22 @@ class _TasksScreenState extends State<TasksScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              builder: (context) => SingleChildScrollView(
-                  child:Container(
-                    //padding: EdgeInsets.only(bottom: MediaQuery.of(context)
-                      //.viewInsets.bottom),
-                    child: AddTaskScreen(),
-                  )
-              )
+            context: context,
+            isScrollControlled: true,
+            builder: (context) => SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: AddTaskScreen(
+                  addTaskCallback: (newTaskTitle) {
+                    setState(() {
+                      tasks.add(Task(name: newTaskTitle));
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ),
           );
         },
         backgroundColor: Colors.lightBlueAccent,
